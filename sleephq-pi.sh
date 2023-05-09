@@ -13,7 +13,7 @@ CARD_MOUNT_POINT="/media/cpapcard"
 BACKUP_PATH="/home/erik/sleephq-backup"
 TODAY_BACKUP=$BACKUP_PATH/$(date +%Y-%m-%d)
 
-DROPBOX_UPLOADER_PATH="/home/erik"
+DROPBOX_UPLOADER="/home/erik/dropbox_uploader.sh"
 
 echo "Checking if the backup directory exists..."
 # Make the backup directory if it doesn't exist
@@ -43,7 +43,7 @@ done
 
 if [ ! -z $CARD_READER ]; then
     echo "Mounting the SD Card at $CARD_MOUNT_POINT..."
-    mount /dev/$CARD_DEV $CARD_MOUNT_POINT
+    sudo mount /dev/$CARD_DEV $CARD_MOUNT_POINT
 
     # Set the ACT LED to blink at 500ms to indicate that the storage device has been mounted
     sudo sh -c "echo timer > /sys/class/leds/ACT/trigger"
@@ -55,9 +55,13 @@ if [ ! -z $CARD_READER ]; then
         # Perform back of $CARD_MOUNT_POINT to $BACKUP_PATH/current date using rsync
         rsync -avh $CARD_MOUNT_POINT/ $TODAY_BACKUP
 
+        # Zip today's backup
+        echo "Zipping the backup..."
+        tar -zcvf $TODAY_BACKUP.tar.gz $TODAY_BACKUP
+
         echo "Uploading the backup to Dropbox..."
         # Upload today's backup to Dropbox
-        $DROPBOX_UPLOADER_PATH/dropbox_uploader.sh upload $TODAY_BACKUP
+        $DROPBOX_UPLOADER -f /home/erik/.dropbox_uploader upload $TODAY_BACKUP.tar.gz /
 
         # Turn off the ACT LED to indicate that the backup is completed
         sudo sh -c "echo 0 > /sys/class/leds/ACT/brightness"
