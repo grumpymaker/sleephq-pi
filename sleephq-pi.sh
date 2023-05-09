@@ -13,6 +13,8 @@ CARD_MOUNT_POINT="/media/erik/6263-6534"
 BACKUP_PATH="/home/erik/sleephq-backup"
 TODAY_BACKUP=$BACKUP_PATH/$(date +%Y-%m-%d)
 
+DROPBOX_UPLOADER_PATH="/home/erik"
+
 echo "Checking if the backup directory exists..."
 # Make the backup directory if it doesn't exist
 if [ ! -d $BACKUP_PATH ]; then
@@ -44,7 +46,7 @@ if [ -d $CARD_MOUNT_POINT ]; then
 
     echo "Uploading the backup to Dropbox..."
     # Upload today's backup to Dropbox
-    ./dropbox_uploader.sh upload $TODAY_BACKUP
+    $DROPBOX_UPLOADER_PATH/dropbox_uploader.sh upload $TODAY_BACKUP
 
     # Turn off the ACT LED to indicate that the backup is completed
     sudo sh -c "echo 0 > /sys/class/leds/ACT/brightness"
