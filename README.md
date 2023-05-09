@@ -21,11 +21,11 @@ This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads u
 - Took a Raspberry Pi 4 I had lying around
 - Downloaded the latest Raspberry Pi imager
 - Customize the settings
-+ Set hostname: sleephq-pi.local
-+ Enable SSH (use password auth, it's in my local network, I don't care lol)
-+ Set username and password
-+ Configure wireless LAN
-+ Set locale settings
+  + Set hostname: sleephq-pi.local
+  + Enable SSH (use password auth, it's in my local network, I don't care lol)
+  + Set username and password
+  + Configure wireless LAN
+  + Set locale settings
 - Write image to microSD card
 - Boot Raspberry Pi from microSD card
 - [Optional] Set DHCP Reservation in firewall
