@@ -1,0 +1,19 @@
+# Unofficial SleepHQ-Pi Automation Utitilies
+
+This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads until the Magic Uploader is open-sourced.
+
+## IDEA
+	• Remove SD Card from CPAP
+	• Insert SD Card into Raspberry Pi setup.
+	• Script runs
+		○ Copy the data off the SD Card into YEAR-MONTH-DAY-HHMMSS folder
+		○ Update symlink to CURRENT-CPAP-DATA
+		○ Throw a timestamp into my Dropbox
+		○ Run Selenium automation to upload to SleepHQ
+		○ Unmount the SD card and alert me it is safe to remove?
+	• Send me a Text through Twilio/Make/IFFFT etc
+		○ "CPAP Data - 2023-05-08
+			 [y/n] copied off SD Card 
+			 [y/n] saved to Dropbox 
+             [y/n] uploaded successfully to SleepHQ"
+
