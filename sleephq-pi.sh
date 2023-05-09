@@ -34,7 +34,11 @@ until [ ! -z $CARD_READER ]
   CARD_READER=$(ls /dev/sd* | grep $CARD_DEV | cut -d"/" -f3)
 done
 
-echo "Checking for the SD Card mount point."
+if [ ! -z $CARD_READER ]; then
+    mount /dev/$CARD_DEV $CARD_MOUNT_POINT
+fi
+
+echo "Checking for the SD Card mount point at $CARD_MOUNT_POINT"
 if [ -d $CARD_MOUNT_POINT ]; then
     # Set the ACT LED to blink at 500ms to indicate that the storage device has been mounted
     sudo sh -c "echo timer > /sys/class/leds/ACT/trigger"
