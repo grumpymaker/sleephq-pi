@@ -31,17 +31,24 @@ This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads u
 - [Optional] Set DHCP Reservation in firewall
 - Connect over SSH to sleephq-pi.local (or by IP depending on local DNS resolver)
 - Update and Upgrade installed packages
+
 	sudo apt update
 	sudo apt upgrade -y
+
 - Enable VNC
+
 	sudo raspi-config
 	Interfacing Options --> VNC --> Yes
 	System Options --> Boot / Auto Login --> Desktop Autologin
+
 - Install python and selenium
+
 	Python3.9 should be installed by default
 	pip install -U selenium
 	sudo apt install chromium-chromedriver
+
 - Install Dropbox-Uploader
+
 	curl "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" -o dropbox_uploader.sh
 	chmod +x dropbox_uploader.sh
 	./dropbox_uploader.sh  # guided through wizard to config access
