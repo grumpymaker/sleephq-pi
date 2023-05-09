@@ -53,7 +53,7 @@ This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads u
 	chmod +x dropbox_uploader.sh
 	./dropbox_uploader.sh  # guided through wizard to config access
 	```
-	
+
 ## Resources
 - https://petapixel.com/2016/06/16/turn-raspberry-pi-auto-photo-backup-device/
 - https://chiselapp.com/user/dmpop/repository/little-backup-box/home
