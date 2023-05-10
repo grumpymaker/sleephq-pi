@@ -8,6 +8,7 @@ I remove the SD Card from my CPAP (currently a ResMed AirSense 11), insert it in
 I used a Raspberry Pi 4 B that I had lying around. I see no reason why this wouldn't work with a RPi 3, or even a Zero W (might require a powered USB hub, not sure).
 
 ## TODO
+- Capture last time stamp of successful run.  Only include files since that time in the zip to reduce upload size!
 - Test the autologin / autorun on power on feature
 - Add in SMS notifications (probably through Make.com/Twilio since I use that infrastructure already.  IFTTT could work too)
 - Abstract out the paths and crentials to a config file (copy a sample config from the git repo into home directory)
