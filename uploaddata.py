@@ -23,7 +23,7 @@ time.sleep(5) # Let the user actually see something!
 
 # Check to see if we're on the login page, else we're already logged in
 if driver.current_url == 'https://sleephq.com/users/sign_in':
-
+    print("Logging in...")
     username_input = driver.find_element(By.ID, 'user_email')
     password_input = driver.find_element(By.ID, 'user_password')
     submit_button = driver.find_element(By.TAG_NAME, 'button')
@@ -36,6 +36,7 @@ if driver.current_url == 'https://sleephq.com/users/sign_in':
 
 # We should be logged in now and on the dashboard page, grab the URL to check (and extract the teams ID)
 dashboardURL = driver.current_url
+print("Dashboard URL: " + dashboardURL)
 
 # Check the dashboard URL to see if it matches the expected format (https://sleephq.com/account/teams/123456)
 if not dashboardURL.startswith('https://sleephq.com/account/teams/'):
@@ -43,17 +44,20 @@ if not dashboardURL.startswith('https://sleephq.com/account/teams/'):
     driver.quit()
     exit()
 
-
 # Extract the teams ID from the end of the URL
 teamID = dashboardURL.split('/')[-1]
+print("teams ID: " + teamID)
 
 # Now we can go to the upload page
 driver.get('https://sleephq.com/account/teams/' + teamID + '/imports')
 
 fileUploadField = driver.find_element(By.XPATH, '//input[@type="file" and @class="dz-hidden-input"]')
 fileUploadField.send_keys(dataFilePath)
-fileUploadField.submit()
+time.sleep(5) # give it a few to grab the file
 
+print("Uploading the datafile...")
+beginUploadButton = driver.find_element(By.ID, 'start-upload-button')
+beginUploadButton.click()
 
 # automatically close the driver after 30 seconds
 time.sleep(30)
