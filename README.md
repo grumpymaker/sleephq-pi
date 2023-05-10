@@ -2,7 +2,11 @@
 
 This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads until the Magic Uploader is open-sourced.
 
+## TL;DR
+I remove the SD Card from my CPAP (currently a ResMed AirSense 11), insert it into my USB card reader, and plug that into the Raspberry Pi.  Either on a timer or on device detection it runs sleephq-pi.sh which copies the data from the SD card, backs it up to my Dropbox, and uploads it automatically to SleepHQ (using a Selenium automation).  It automatically unmounts the SD card when it is done and sends me a text message confirmation.
+
 ## TODO
+- Setup either a Cronjob or autodetect the USB device and run the script.  Maybe on RPi boot and login?
 - Add in SMS notifications (probably through Make.com/Twilio since I use that infrastructure already.  IFTTT could work too)
 - Abstract out the paths and crentials to a config file (copy a sample config from the git repo into home directory)
 
@@ -24,7 +28,7 @@ This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads u
 	sudo apt update
 	sudo apt upgrade -y
 	```
-- Enable VNC
+- Enable VNC and set Desktop-Autologin so the GUI is loaded even while headless
 	```
 	sudo raspi-config
 	Interfacing Options --> VNC --> Yes

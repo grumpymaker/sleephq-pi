@@ -67,6 +67,7 @@ if [ ! -z $CARD_READER ]; then
         sh python uploaddata.py
 
         # Unmount the SD Card
+        sync # Flush the filesystem buffer
         sudo umount $CARD_MOUNT_POINT
     fi
 else
