@@ -1,4 +1,4 @@
-# Erik's Unofficial SleepHQ-Pi Automation Utilities
+# Erik's Unofficial SleepHQ-Pi Automation Utilities v0.3
 
 This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads until the Magic Uploader is open-sourced.
 
