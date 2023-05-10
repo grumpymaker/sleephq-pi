@@ -2,7 +2,7 @@
 ################################################################################################################
 # Main script to run on the Raspberry Pi to backup the CPAP's SD Card and upload the data to SleepHQ / Dropbox #
 # This is a work in progress!                                                                                  #
-# v0.1                                                                                                         #
+# v0.2                                                                                                         #
 # Written by Erik Reynolds (https://github.com/grumpymaker/sleephq-pi)                                         #
 ################################################################################################################
 
@@ -11,7 +11,8 @@ CARD_DEV="sda1"
 CARD_MOUNT_POINT="/media/cpapcard"
 
 BACKUP_PATH="/home/erik/sleephq-backup"
-TODAY_BACKUP=$BACKUP_PATH/$(date +%Y-%m-%d)
+TODAY=$(date +%Y-%m-%d)
+TODAY_BACKUP=$BACKUP_PATH/$TODAY
 
 DROPBOX_UPLOADER="/home/erik/dropbox_uploader.sh"
 
@@ -57,16 +58,21 @@ if [ ! -z $CARD_READER ]; then
 
         # Zip today's backup
         echo "Zipping the backup..."
-        tar -zcvf $TODAY_BACKUP.tar.gz $TODAY_BACKUP
+        7z a $BACKUP_PATH/$TODAY.zip $TODAY_BACKUP/*
+
+        # Copy today's backup to the current.zip file
+        rm current.zip
+        cp $BACKUP_PATH/$TODAY.zip current.zip
 
         echo "Uploading the backup to Dropbox..."
         # Upload today's backup to Dropbox
-        $DROPBOX_UPLOADER -f /home/erik/.dropbox_uploader upload $TODAY_BACKUP.tar.gz /
+        $DROPBOX_UPLOADER -f /home/erik/.dropbox_uploader upload $BACKUP_PATH/$TODAY.zip /
 
         # Turn off the ACT LED to indicate that the backup is completed
         sudo sh -c "echo 0 > /sys/class/leds/ACT/brightness"
 
         # Call the Python Selenium script to upload the data to SleepHQ
+        sh python uploaddata.py
 
         # Unmount the SD Card
         sudo umount $CARD_MOUNT_POINT

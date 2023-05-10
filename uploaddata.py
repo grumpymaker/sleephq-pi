@@ -1,7 +1,7 @@
 ################################################################################################################
 # Python3 script to run on the Raspberry Pi upload the latest data to SleepHQ / Dropbox                        #
 # This is a work in progress!                                                                                  #
-# v0.1                                                                                                         #
+# v0.2                                                                                                         #
 # Written by Erik Reynolds (https://github.com/grumpymaker/sleephq-pi)                                         #
 ################################################################################################################
 
@@ -60,6 +60,7 @@ print("Uploading the datafile...")
 beginUploadButton = driver.find_element(By.ID, 'start-upload-button')
 beginUploadButton.click()
 
-# automatically close the driver after 30 seconds
-time.sleep(30)
+# Give it 60 seconds to upload the file before quitting
+time.sleep(60)
+print("Done! Closing the browser...")
 driver.quit()
