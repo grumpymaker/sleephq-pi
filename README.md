@@ -5,6 +5,8 @@ This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads u
 ## TL;DR
 I remove the SD Card from my CPAP (currently a ResMed AirSense 11), insert it into my USB card reader, and plug that into the Raspberry Pi.  Turn on the RPi, which on autologin runs sleephq-pi.sh which copies the data from the SD card, backs it up to my Dropbox, and uploads it automatically to SleepHQ (using a Selenium automation).  It automatically unmounts the SD card when it is done and sends me a text message confirmation.
 
+I used a Raspberry Pi 4 B that I had lying around. I see no reason why this wouldn't work with a RPi 3, or even a Zero W (might require a powered USB hub, not sure).
+
 ## TODO
 - Test the autologin / autorun on power on feature
 - Add in SMS notifications (probably through Make.com/Twilio since I use that infrastructure already.  IFTTT could work too)
