@@ -1,7 +1,7 @@
 ################################################################################################################
 # Python3 script to run on the Raspberry Pi upload the latest data to SleepHQ / Dropbox                        #
 # This is a work in progress!                                                                                  #
-# v0.2                                                                                                         #
+# v0.3                                                                                                         #
 # Written by Erik Reynolds (https://github.com/grumpymaker/sleephq-pi)                                         #
 ################################################################################################################
 

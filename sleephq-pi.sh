@@ -2,7 +2,7 @@
 ################################################################################################################
 # Main script to run on the Raspberry Pi to backup the CPAP's SD Card and upload the data to SleepHQ / Dropbox #
 # This is a work in progress!                                                                                  #
-# v0.2                                                                                                         #
+# v0.3                                                                                                         #
 # Written by Erik Reynolds (https://github.com/grumpymaker/sleephq-pi)                                         #
 ################################################################################################################
 
@@ -30,9 +30,6 @@ if [ ! -d $CARD_MOUNT_POINT ]; then
     sudo mkdir $CARD_MOUNT_POINT
 fi
 
-# Set the ACT LED to heartbeat
-sudo sh -c "echo heartbeat > /sys/class/leds/ACT/trigger"
-
 echo "Checking if the card reader is plugged in..."
 # Wait for a card reader or a camera
 CARD_READER=$(ls /dev/* | grep $CARD_DEV | cut -d"/" -f3)
@@ -46,10 +43,6 @@ if [ ! -z $CARD_READER ]; then
     echo "Mounting the SD Card at $CARD_MOUNT_POINT..."
     sudo mount /dev/$CARD_DEV $CARD_MOUNT_POINT
 
-    # Set the ACT LED to blink at 500ms to indicate that the storage device has been mounted
-    sudo sh -c "echo timer > /sys/class/leds/ACT/trigger"
-    sudo sh -c "echo 500 > /sys/class/leds/ACT/delay_on"
-
     # Check if 'Identification.json' exists in the root of the SD Card
     if [ -f $CARD_MOUNT_POINT/Identification.json ]; then        
         echo "Copying the SD Card contents to $BACKUP_PATH"
@@ -61,15 +54,14 @@ if [ ! -z $CARD_READER ]; then
         7z a $BACKUP_PATH/$TODAY.zip $TODAY_BACKUP/*
 
         # Copy today's backup to the current.zip file
-        rm current.zip
-        cp $BACKUP_PATH/$TODAY.zip current.zip
+        rm $BACKUP_PATH/current.zip
+        cp $BACKUP_PATH/$TODAY.zip $BACKUP_PATH/current.zip
 
+        ### This section copies today's backup to Dropbox ###
+        ### Comment out this section if you don't want to use Dropbox ###
         echo "Uploading the backup to Dropbox..."
-        # Upload today's backup to Dropbox
         $DROPBOX_UPLOADER -f /home/erik/.dropbox_uploader upload $BACKUP_PATH/$TODAY.zip /
-
-        # Turn off the ACT LED to indicate that the backup is completed
-        sudo sh -c "echo 0 > /sys/class/leds/ACT/brightness"
+        ### END DROPBOX SECTION ###
 
         # Call the Python Selenium script to upload the data to SleepHQ
         sh python uploaddata.py
