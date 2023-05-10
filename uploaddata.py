@@ -33,6 +33,7 @@ if driver.current_url == 'https://sleephq.com/users/sign_in':
     password_input.send_keys(sleepPassword)
     time.sleep(2)
     submit_button.click()
+    time.sleep(5) # give it a second to login and redirect
 
 # We should be logged in now and on the dashboard page, grab the URL to check (and extract the teams ID)
 dashboardURL = driver.current_url
