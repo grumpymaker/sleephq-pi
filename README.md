@@ -3,10 +3,10 @@
 This is a rough and dirty log of what I'm doing to automate my SleepHQ uploads until the Magic Uploader is open-sourced.
 
 ## TL;DR
-I remove the SD Card from my CPAP (currently a ResMed AirSense 11), insert it into my USB card reader, and plug that into the Raspberry Pi.  Either on a timer or on device detection it runs sleephq-pi.sh which copies the data from the SD card, backs it up to my Dropbox, and uploads it automatically to SleepHQ (using a Selenium automation).  It automatically unmounts the SD card when it is done and sends me a text message confirmation.
+I remove the SD Card from my CPAP (currently a ResMed AirSense 11), insert it into my USB card reader, and plug that into the Raspberry Pi.  Turn on the RPi, which on autologin runs sleephq-pi.sh which copies the data from the SD card, backs it up to my Dropbox, and uploads it automatically to SleepHQ (using a Selenium automation).  It automatically unmounts the SD card when it is done and sends me a text message confirmation.
 
 ## TODO
-- Setup either a Cronjob or autodetect the USB device and run the script.  Maybe on RPi boot and login?
+- Test the autologin / autorun on power on feature
 - Add in SMS notifications (probably through Make.com/Twilio since I use that infrastructure already.  IFTTT could work too)
 - Abstract out the paths and crentials to a config file (copy a sample config from the git repo into home directory)
 
@@ -55,6 +55,15 @@ I remove the SD Card from my CPAP (currently a ResMed AirSense 11), insert it in
   + Card reader device name [sda1 or similar] in sleephq-pi.sh
   + Backup path (and other paths) in sleephq-pi.sh
   + SleepHQ username and password in uploaddata.py
+- [Currently untested] Edit autostart to run the script on system boot --> user autologin
+	```
+	sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+
+	@lxpanel --profile LXDE-pi
+	@pcmanfm --desktop --profile LXDE-pi
+	@xscreensaver -no-splash
+	@bash /home/erik/sleephq-pi/sleephq-pi.sh
+	```
 
 ## Original Idea
 	• Remove SD Card from CPAP
